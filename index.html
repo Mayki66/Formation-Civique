@@ -2,29 +2,44 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Naturalisation - Pour Suchithra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Quiz Naturalisation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <nav class="navbar">
+        <button class="nav-btn" onclick="quitQuiz()">❌ Quitter</button>
+        <div id="timer" class="hidden">45:00</div>
+        <button class="nav-btn" onclick="toggleTheme()">🌗</button>
+    </nav>
+
     <div class="container">
         <div id="start-screen" class="screen active">
-            <h1>🇫🇷 Quiz Naturalisation</h1>
-            <p>Entraînement à l'entretien réglementaire.</p>
-            <p>Objectif : 40 questions, maximum 8 erreurs.</p>
-            <button onclick="startQuiz()">Commencer l'examen</button>
+            <h1>🇫🇷 Prêt pour l'examen ?</h1>
+            <p>40 questions • 45 minutes • Max 8 fautes</p>
+            <div class="info-box">
+                <p>Thèmes : Histoire, Géographie, Institutions, Valeurs.</p>
+            </div>
+            <button class="main-btn" onclick="startQuiz()">Commencer l'épreuve</button>
         </div>
 
         <div id="quiz-screen" class="screen hidden">
+            <div class="quiz-header">
+                <span id="theme-display" class="theme-tag">Culture Générale</span>
+                <span id="question-count">1/40</span>
+            </div>
+            
             <div class="progress-bar">
                 <div id="progress"></div>
             </div>
-            <div class="question-header">
-                <span id="question-count">Question 1/40</span>
-            </div>
-            <h2 id="question-text">La question s'affichera ici...</h2>
-            <div id="options-container" class="options-grid">
+
+            <h2 id="question-text">Question...</h2>
+            
+            <div id="options-container" class="options-grid"></div>
+
+            <div class="navigation-area">
+                <button id="btn-prev" class="secondary-btn hidden" onclick="prevQuestion()">⬅ Précédent</button>
                 </div>
         </div>
 
@@ -32,11 +47,10 @@
             <h2>Résultat de la session</h2>
             <div id="score-display"></div>
             <p id="pass-fail-message"></p>
+            <button class="main-btn" onclick="restartQuiz()">Nouvelle Série</button>
             
-            <button onclick="restartQuiz()">Recommencer</button>
-
             <div class="corrections">
-                <h3>Corrections et Explications :</h3>
+                <h3>Détail des réponses :</h3>
                 <div id="correction-list"></div>
             </div>
         </div>

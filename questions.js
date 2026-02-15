@@ -1,224 +1,409 @@
 const questionsData = [
+    // --- SYMBOLES & VALEURS ---
     {
+        theme: "Valeurs & Symboles",
         question: "Quelle est la devise de la République française ?",
         options: ["Travail, Famille, Patrie", "Liberté, Égalité, Fraternité", "Honneur et Patrie", "Vérité et Justice"],
-        correct: 1, // L'index de la bonne réponse (commence à 0)
-        explanation: "La devise de la France est 'Liberté, Égalité, Fraternité'. Elle figure dans la Constitution de 1958."
+        correct: 1,
+        explanation: "La devise Liberté, Égalité, Fraternité est héritée de la Révolution et inscrite dans la Constitution."
     },
     {
+        theme: "Valeurs & Symboles",
+        question: "Que représente le buste de Marianne ?",
+        options: ["La mode française", "La République française", "La résistance", "La gastronomie"],
+        correct: 1,
+        explanation: "Marianne est une figure allégorique de la République. Elle porte le bonnet phrygien (symbole de liberté)."
+    },
+    {
+        theme: "Valeurs & Symboles",
+        question: "Quelles sont les trois couleurs du drapeau français ?",
+        options: ["Bleu, Blanc, Rouge", "Vert, Blanc, Rouge", "Bleu, Jaune, Rouge", "Rouge, Blanc, Bleu"],
+        correct: 0,
+        explanation: "Bleu et Rouge (Paris) encadrent le Blanc (Royauté), symbolisant l'union de la Nation."
+    },
+    {
+        theme: "Valeurs & Symboles",
         question: "Quel est l'hymne national de la France ?",
-        options: ["Le Chant du Départ", "L'Ode à la Joie", "La Marseillaise", "Le Chant des Partisans"],
-        correct: 2,
+        options: ["Le Chant du Départ", "La Marseillaise", "L'Hymne à l'Amour", "God Save the King"],
+        correct: 1,
         explanation: "La Marseillaise a été écrite par Rouget de Lisle en 1792."
     },
     {
-        question: "Qui a le pouvoir de voter les lois en France ?",
-        options: ["Le Président de la République", "Le Parlement (Assemblée nationale et Sénat)", "Le Premier ministre", "Les juges"],
+        theme: "Valeurs & Symboles",
+        question: "Le 14 juillet commémore :",
+        options: ["L'armistice de 1918", "La prise de la Bastille (1789)", "La mort du Roi", "La Libération"],
         correct: 1,
-        explanation: "C'est le Parlement (composé de l'Assemblée nationale et du Sénat) qui vote les lois."
+        explanation: "C'est la Fête Nationale qui commémore la prise de la Bastille (1789) et la Fête de la Fédération (1790)."
     },
     {
-        question: "En quelle année les femmes ont-elles obtenu le droit de vote en France ?",
-        options: ["1789", "1848", "1944", "1981"],
+        theme: "Valeurs & Symboles",
+        question: "Que signifie le principe de 'Laïcité' ?",
+        options: ["L'interdiction des religions", "La séparation des Églises et de l'État", "L'obligation d'être catholique", "Le refus de croire"],
+        correct: 1,
+        explanation: "L'État est neutre et garantit la liberté de conscience (croire ou ne pas croire)."
+    },
+
+    // --- INSTITUTIONS ---
+    {
+        theme: "Institutions",
+        question: "Qui est le chef de l'État ?",
+        options: ["Le Premier ministre", "Le Président de la République", "Le Président du Sénat", "Le Maire"],
+        correct: 1,
+        explanation: "Le Président de la République est élu au suffrage universel direct."
+    },
+    {
+        theme: "Institutions",
+        question: "Où réside le Président de la République ?",
+        options: ["Au Palais de l'Élysée", "À l'Hôtel Matignon", "Au Palais Bourbon", "Au Louvre"],
+        correct: 0,
+        explanation: "Le Palais de l'Élysée est la résidence officielle du chef de l'État."
+    },
+    {
+        theme: "Institutions",
+        question: "Qui dirige le Gouvernement ?",
+        options: ["Le Président", "Le Premier ministre", "Le Ministre de l'Intérieur", "Les Députés"],
+        correct: 1,
+        explanation: "Le Premier ministre dirige l'action du Gouvernement. Il est nommé par le Président."
+    },
+    {
+        theme: "Institutions",
+        question: "Quelle est la durée du mandat du Président (le quinquennat) ?",
+        options: ["4 ans", "5 ans", "7 ans", "10 ans"],
+        correct: 1,
+        explanation: "Le Président est élu pour 5 ans (depuis l'année 2000)."
+    },
+    {
+        theme: "Institutions",
+        question: "Où sont votées les lois ?",
+        options: ["Au Parlement", "À l'Élysée", "Au Tribunal", "Dans les mairies"],
+        correct: 0,
+        explanation: "Le Parlement (Assemblée nationale + Sénat) détient le pouvoir législatif (voter la loi)."
+    },
+    {
+        theme: "Institutions",
+        question: "Quel est l'âge de la majorité légale en France ?",
+        options: ["16 ans", "18 ans", "21 ans", "25 ans"],
+        correct: 1,
+        explanation: "À 18 ans, on devient citoyen à part entière (droit de vote)."
+    },
+    {
+        theme: "Institutions",
+        question: "Combien y a-t-il de députés à l'Assemblée nationale ?",
+        options: ["100", "348", "577", "900"],
         correct: 2,
-        explanation: "Les femmes ont obtenu le droit de vote en 1944, par une ordonnance du Général de Gaulle."
+        explanation: "Il y a 577 députés élus par le peuple."
     },
     {
+        theme: "Institutions",
+        question: "Qui a le droit de vote en France ?",
+        options: ["Seulement les hommes", "Les citoyens français majeurs", "Ceux qui paient des impôts", "Tout le monde"],
+        correct: 1,
+        explanation: "Il faut être de nationalité française, avoir 18 ans et jouir de ses droits civiques."
+    },
+
+    // --- HISTOIRE ---
+    {
+        theme: "Histoire",
+        question: "Qui est surnommé le 'Roi Soleil' ?",
+        options: ["Charlemagne", "Louis XIV", "Henri IV", "Napoléon"],
+        correct: 1,
+        explanation: "Louis XIV (le Roi Soleil) a fait construire le château de Versailles pour y installer sa cour."
+    },
+    {
+        theme: "Histoire",
+        question: "En quelle année a débuté la Révolution française ?",
+        options: ["1515", "1789", "1848", "1945"],
+        correct: 1,
+        explanation: "1789 marque la fin de l'Ancien Régime et la Déclaration des Droits de l'Homme."
+    },
+    {
+        theme: "Histoire",
+        question: "Qui fut le premier Empereur des Français ?",
+        options: ["Clovis", "Napoléon Bonaparte", "Charles de Gaulle", "François Ier"],
+        correct: 1,
+        explanation: "Napoléon Ier a été sacré empereur en 1804."
+    },
+    {
+        theme: "Histoire",
+        question: "Dates de la Première Guerre mondiale :",
+        options: ["1870-1871", "1914-1918", "1939-1945", "1954-1962"],
+        correct: 1,
+        explanation: "La 'Grande Guerre' a duré 4 ans, de 1914 à 1918."
+    },
+    {
+        theme: "Histoire",
+        question: "Qui a lancé l'appel du 18 juin 1940 ?",
+        options: ["Le Maréchal Pétain", "Le Général de Gaulle", "Jean Moulin", "Georges Clemenceau"],
+        correct: 1,
+        explanation: "Depuis Londres, le Général de Gaulle a appelé les Français à résister contre l'occupation nazie."
+    },
+    {
+        theme: "Histoire",
+        question: "Quand les femmes ont-elles obtenu le droit de vote ?",
+        options: ["1789", "1905", "1944", "1981"],
+        correct: 2,
+        explanation: "Elles ont obtenu le droit de vote en 1944 et ont voté pour la première fois en 1945."
+    },
+    {
+        theme: "Histoire",
+        question: "En quelle année la peine de mort a-t-elle été abolie ?",
+        options: ["1945", "1968", "1981", "2002"],
+        correct: 2,
+        explanation: "Sous la présidence de François Mitterrand, grâce au combat de Robert Badinter."
+    },
+    {
+        theme: "Histoire",
+        question: "Qui a rendu l'école gratuite, laïque et obligatoire ?",
+        options: ["Jules Ferry", "Victor Hugo", "Napoléon", "Charlemagne"],
+        correct: 0,
+        explanation: "Les lois Jules Ferry (1881-1882) sont le socle de l'école républicaine."
+    },
+    {
+        theme: "Histoire",
+        question: "L'abolition définitive de l'esclavage date de :",
+        options: ["1789", "1848", "1905", "1945"],
+        correct: 1,
+        explanation: "L'esclavage a été aboli en 1848 (IIe République) sous l'impulsion de Victor Schœlcher."
+    },
+    {
+        theme: "Histoire",
+        question: "Qui est Jeanne d'Arc ?",
+        options: ["Une reine de France", "Une héroïne qui a combattu les Anglais", "Une écrivaine", "La femme de Napoléon"],
+        correct: 1,
+        explanation: "Elle a aidé Charles VII à libérer la France pendant la Guerre de Cent Ans (XVe siècle)."
+    },
+
+    // --- GÉOGRAPHIE ---
+    {
+        theme: "Géographie",
+        question: "Quelle est la capitale de la France ?",
+        options: ["Lyon", "Marseille", "Paris", "Bordeaux"],
+        correct: 2,
+        explanation: "Paris est la capitale politique, économique et culturelle."
+    },
+    {
+        theme: "Géographie",
         question: "Quel fleuve traverse Paris ?",
-        options: ["La Loire", "Le Rhône", "La Seine", "La Garonne"],
+        options: ["La Loire", "La Seine", "Le Rhône", "La Garonne"],
+        correct: 1,
+        explanation: "C'est la Seine qui coule à Paris."
+    },
+    {
+        theme: "Géographie",
+        question: "Quel est le plus haut sommet d'Europe situé en France ?",
+        options: ["Le Pic du Midi", "Le Mont Blanc", "Le Puy de Dôme", "L'Etna"],
+        correct: 1,
+        explanation: "Le Mont Blanc, dans les Alpes, culmine à environ 4807 mètres."
+    },
+    {
+        theme: "Géographie",
+        question: "La France est bordée à l'Ouest par :",
+        options: ["La Mer Méditerranée", "L'Océan Atlantique", "La Mer du Nord", "L'Océan Indien"],
+        correct: 1,
+        explanation: "L'Océan Atlantique borde toute la côte Ouest."
+    },
+    {
+        theme: "Géographie",
+        question: "Quel pays est frontalier avec la France ?",
+        options: ["Le Portugal", "La Pologne", "L'Espagne", "La Grèce"],
         correct: 2,
-        explanation: "C'est la Seine qui traverse Paris."
+        explanation: "L'Espagne partage la frontière des Pyrénées avec la France."
     },
-    // --- VARIATIONS : HISTOIRE (Reformulations) ---
-
     {
-        question: "Quel événement marque le début de la République en France ?",
-        options: ["Le baptême de Clovis", "La Révolution de 1789", "La victoire de 1918", "L'élection de De Gaulle"],
+        theme: "Géographie",
+        question: "Citez un département d'Outre-Mer (DROM) :",
+        options: ["La Corse", "La Guadeloupe", "La Bretagne", "Tahiti"],
         correct: 1,
-        explanation: "C'est la Révolution française qui met fin à la monarchie absolue et initie la République."
+        explanation: "La Guadeloupe, la Martinique, la Guyane, la Réunion et Mayotte sont des départements d'Outre-mer."
     },
     {
-        question: "Qui est considéré comme le premier Roi des Francs ?",
-        options: ["Charlemagne", "Clovis", "Louis XIV", "Vercingétorix"],
+        theme: "Géographie",
+        question: "Quelle est la forme géométrique souvent utilisée pour décrire la France ?",
+        options: ["Le Carré", "L'Hexagone", "Le Cercle", "Le Triangle"],
         correct: 1,
-        explanation: "Clovis (481-511) est considéré comme le premier roi à avoir unifié les Francs."
-    },
-    {
-        question: "Contre qui la France s'est-elle battue pendant la Guerre de 14-18 ?",
-        options: ["L'Angleterre", "L'Allemagne et l'Autriche-Hongrie", "La Russie", "L'Espagne"],
-        correct: 1,
-        explanation: "La France était alliée à l'Angleterre et la Russie contre l'Allemagne."
-    },
-    {
-        question: "Quel personnage a entendu des voix et libéré Orléans ?",
-        options: ["Marie-Antoinette", "Jeanne d'Arc", "Catherine de Médicis", "George Sand"],
-        correct: 1,
-        explanation: "Jeanne d'Arc, héroïne de la Guerre de Cent Ans, a été brûlée à Rouen."
-    },
-    {
-        question: "Le Débarquement des Alliés en Normandie a eu lieu le :",
-        options: ["14 juillet 1789", "11 novembre 1918", "6 juin 1944", "8 mai 1945"],
-        correct: 2,
-        explanation: "Le 6 juin 1944 (D-Day) marque le début de la Libération de la France."
-    },
-    {
-        question: "Quel célèbre château a été construit par François Ier ?",
-        options: ["Versailles", "Chambord", "Fontainebleau", "Le Louvre"],
-        correct: 1,
-        explanation: "Chambord est le symbole de la Renaissance française voulue par François Ier."
+        explanation: "La France métropolitaine a 6 côtés, d'où le surnom 'l'Hexagone'."
     },
 
-    // --- VARIATIONS : GÉOGRAPHIE (Pièges) ---
+    // --- CULTURE ---
     {
-        question: "Lequel de ces pays NE touche PAS la France ?",
-        options: ["L'Italie", "La Belgique", "Le Royaume-Uni", "L'Espagne"],
+        theme: "Culture",
+        question: "Qui a écrit 'Les Misérables' ?",
+        options: ["Molière", "Victor Hugo", "Émile Zola", "Albert Camus"],
+        correct: 1,
+        explanation: "Victor Hugo est un écrivain majeur du XIXe siècle, inhumé au Panthéon."
+    },
+    {
+        theme: "Culture",
+        question: "Qui est Molière ?",
+        options: ["Un peintre", "Un dramaturge (auteur de théâtre)", "Un scientifique", "Un roi"],
+        correct: 1,
+        explanation: "Molière (Jean-Baptiste Poquelin) est le plus célèbre auteur de comédies français."
+    },
+    {
+        theme: "Culture",
+        question: "Le Tour de France est une compétition de :",
+        options: ["Voile", "Tennis", "Cyclisme (vélo)", "Course à pied"],
         correct: 2,
-        explanation: "Le Royaume-Uni est séparé de la France par la Manche. Il n'y a pas de frontière terrestre (sauf le tunnel)."
+        explanation: "C'est la plus grande course cycliste au monde, chaque année en juillet."
     },
     {
-        question: "Quelle île française se trouve dans la mer Méditerranée ?",
-        options: ["La Réunion", "La Corse", "La Guadeloupe", "Oléron"],
-        correct: 1,
-        explanation: "La Corse est une île française située au sud-est du continent, en Méditerranée."
-    },
-    {
-        question: "Outre Paris, quelles sont les deux plus grandes villes de France ?",
-        options: ["Bordeaux et Lille", "Marseille et Lyon", "Toulouse et Nice", "Nantes et Strasbourg"],
-        correct: 1,
-        explanation: "Marseille et Lyon sont les plus grandes agglomérations après Paris."
-    },
-    {
-        question: "Dans quelle région se trouve le Parlement Européen ?",
-        options: ["En Île-de-France", "En Grand-Est (Alsace)", "En Bretagne", "En PACA"],
-        correct: 1,
-        explanation: "Il se trouve à Strasbourg, qui fait partie de la région Grand-Est."
-    },
-
-    // --- VARIATIONS : INSTITUTIONS (Compréhension) ---
-    {
-        question: "Si le Président de la République décède, qui le remplace par intérim ?",
-        options: ["Le Premier ministre", "La femme du Président", "Le Président du Sénat", "Le chef de l'armée"],
-        correct: 2,
-        explanation: "C'est le Président du Sénat qui assure l'intérim jusqu'à une nouvelle élection."
-    },
-    {
-        question: "L'Assemblée Nationale peut-elle renverser le Gouvernement ?",
-        options: ["Oui, par une motion de censure", "Non, jamais", "Seulement si le Président est d'accord", "Oui, mais seulement le lundi"],
+        theme: "Culture",
+        question: "Qu'est-ce que le TGV ?",
+        options: ["Train à Grande Vitesse", "Transport Général de Ville", "Tramway du Grand Versailles", "Taxe Générale"],
         correct: 0,
-        explanation: "L'Assemblée peut forcer le gouvernement à démissionner en votant une motion de censure."
+        explanation: "Le TGV permet de relier les grandes villes françaises très rapidement."
     },
     {
-        question: "Combien de députés siègent à l'Assemblée Nationale ?",
-        options: ["100", "348", "577", "1000"],
+        theme: "Culture",
+        question: "Quel monument parisien a été construit pour l'Exposition de 1889 ?",
+        options: ["L'Arc de Triomphe", "La Tour Eiffel", "Le Louvre", "Notre-Dame"],
+        correct: 1,
+        explanation: "La Tour Eiffel, œuvre de Gustave Eiffel, devait être éphémère à l'origine."
+    },
+    {
+        theme: "Culture",
+        question: "Marie Curie est célèbre pour :",
+        options: ["Ses peintures", "Ses recherches sur la radioactivité", "Ses romans", "Son rôle politique"],
+        correct: 1,
+        explanation: "Elle a reçu deux prix Nobel (Physique et Chimie). Ses cendres sont au Panthéon."
+    },
+    {
+        theme: "Culture",
+        question: "Quel est le plat typique de Marseille ?",
+        options: ["La Choucroute", "La Bouillabaisse", "Le Cassoulet", "La Crêpe"],
+        correct: 1,
+        explanation: "La Bouillabaisse est une soupe de poissons traditionnelle."
+    },
+    
+    // --- DROITS ET DEVOIRS ---
+    {
+        theme: "Droits & Devoirs",
+        question: "Quel est l'un des devoirs des citoyens ?",
+        options: ["Partir en vacances", "Payer l'impôt", "Acheter une voiture", "Avoir des enfants"],
+        correct: 1,
+        explanation: "Participer aux charges publiques (impôts) est un devoir constitutionnel."
+    },
+    {
+        theme: "Droits & Devoirs",
+        question: "La justice en France est rendue au nom de :",
+        options: ["Du Président", "De Dieu", "Du Peuple français", "Du Roi"],
         correct: 2,
-        explanation: "Il y a 577 députés élus pour représenter les Français."
+        explanation: "Les jugements commencent par 'Au nom du Peuple français'."
     },
     {
-        question: "Quelle est la fonction du Conseil Constitutionnel ?",
-        options: ["Voter les lois", "Vérifier que les lois respectent la Constitution", "Juger les criminels", "Diriger l'armée"],
-        correct: 1,
-        explanation: "Il est le garant de la Constitution et valide les élections."
-    },
-    {
-        question: "Comment appelle-t-on la loi fondamentale qui organise l'État ?",
-        options: ["Le Code Civil", "La Constitution", "Le Code Pénal", "La Déclaration des Droits"],
-        correct: 1,
-        explanation: "La France est régie par la Constitution de la Ve République (1958)."
-    },
-
-    // --- VARIATIONS : SYMBOLES & VALEURS (Subtilité) ---
-    {
-        question: "Que signifie 'Fraternité' dans la devise française ?",
-        options: ["Vivre avec ses frères", "La solidarité entre les citoyens", "L'obligation d'aimer tout le monde", "L'égalité des salaires"],
-        correct: 1,
-        explanation: "La Fraternité évoque la solidarité (aides sociales, entraide) entre les membres de la nation."
-    },
-    {
-        question: "Lequel de ces symboles N'EST PAS un symbole officiel ?",
-        options: ["Le Drapeau tricolore", "La Marseillaise", "Le croissant au beurre", "Marianne"],
-        correct: 2,
-        explanation: "Le croissant est un symbole culturel, mais pas politique ou officiel."
-    },
-    {
-        question: "Quel jour la Marseillaise a-t-elle été déclarée hymne national ?",
-        options: ["Le 14 juillet 1789", "Sous la IIIe République", "Par Napoléon", "En 2002"],
-        correct: 1,
-        explanation: "Elle devient hymne national en 1879 sous la IIIe République."
-    },
-    {
-        question: "Sur le drapeau européen, combien y a-t-il d'étoiles ?",
-        options: ["12 étoiles dorées", "27 étoiles (nombre de pays)", "10 étoiles blanches", "50 étoiles"],
+        theme: "Droits & Devoirs",
+        question: "Quel numéro appeler en cas d'urgence médicale (SAMU) ?",
+        options: ["15", "17", "18", "112"],
         correct: 0,
-        explanation: "Le drapeau européen a toujours 12 étoiles en cercle (symbole de perfection), peu importe le nombre de pays."
+        explanation: "Le 15 est le SAMU. Le 17 Police, le 18 Pompiers, le 112 Urgences Européennes."
     },
 
-    // --- DROITS, DEVOIRS & SOCIÉTÉ ---
+    // --- UNION EUROPÉENNE ---
     {
-        question: "En France, payer ses impôts est :",
-        options: ["Facultatif", "Un devoir citoyen", "Seulement pour les riches", "Interdit"],
+        theme: "Union Européenne",
+        question: "Quelle est la monnaie commune de la France ?",
+        options: ["Le Franc", "L'Euro", "Le Dollar", "La Livre"],
         correct: 1,
-        explanation: "Participer au financement des services publics est un devoir de tout citoyen."
+        explanation: "L'Euro est la monnaie de la France depuis 2002."
     },
     {
-        question: "Pour voter en France, il faut obligatoirement :",
-        options: ["Être propriétaire", "Être inscrit sur les listes électorales", "Avoir un travail", "Parler trois langues"],
+        theme: "Union Européenne",
+        question: "Où siège le Parlement européen ?",
+        options: ["À Paris", "À Strasbourg", "À Bruxelles", "À Berlin"],
         correct: 1,
-        explanation: "Il faut être majeur, français et inscrit sur les listes électorales."
+        explanation: "Le siège officiel est à Strasbourg (France)."
     },
     {
-        question: "Quelle affirmation est vraie concernant la justice en France ?",
-        options: ["On est coupable jusqu'à preuve du contraire", "On est innocent jusqu'à preuve du contraire", "La justice est payante", "Les juges sont élus par le peuple"],
+        theme: "Union Européenne",
+        question: "Combien d'étoiles y a-t-il sur le drapeau européen ?",
+        options: ["10", "12", "27", "50"],
         correct: 1,
-        explanation: "C'est la 'présomption d'innocence'."
-    },
-    {
-        question: "Lequel de ces droits est garanti par la République ?",
-        options: ["Le droit de ne pas travailler", "La liberté d'expression", "Le droit de rouler à 200km/h", "Le droit de ne pas payer"],
-        correct: 1,
-        explanation: "La liberté d'expression est fondamentale, tant qu'elle ne nuit pas à autrui."
-    },
-    {
-        question: "Que garantit la Sécurité Sociale ?",
-        options: ["Des vacances gratuites", "Une protection contre les risques (maladie, vieillesse...)", "Un travail pour tous", "Le logement gratuit"],
-        correct: 1,
-        explanation: "Créée en 1945, la 'Sécu' protège la santé et la famille."
+        explanation: "12 étoiles dorées sur fond bleu, symbole de perfection et d'unité (et non du nombre de pays)."
     },
 
-    // --- CULTURE GÉNÉRALE (Divers) ---
+    // --- QUESTIONS PIÈGES / DIVERS ---
     {
-        question: "Qui a peint 'La Joconde' (exposée au Louvre) ?",
-        options: ["Claude Monet", "Léonard de Vinci", "Picasso", "Van Gogh"],
+        theme: "Divers",
+        question: "Peut-on perdre la nationalité française ?",
+        options: ["Non, jamais", "Oui, dans certains cas très graves", "Oui, si on ne vote pas", "Oui, si on quitte la France"],
         correct: 1,
-        explanation: "Léonard de Vinci l'a peinte, et François Ier l'a fait venir en France."
+        explanation: "La déchéance de nationalité est possible mais extrêmement rare (terrorisme, trahison)."
     },
     {
-        question: "Quel événement sportif se déroule à Roland-Garros ?",
-        options: ["Un tournoi de rugby", "Une course de Formule 1", "Un tournoi de tennis", "Une compétition de natation"],
+        theme: "Divers",
+        question: "Qui a écrit la Déclaration des Droits de la Femme en 1791 ?",
+        options: ["Marie-Antoinette", "Olympe de Gouges", "Simone de Beauvoir", "Coco Chanel"],
+        correct: 1,
+        explanation: "Olympe de Gouges, guillotinée en 1793, est une pionnière du féminisme."
+    },
+    {
+        theme: "Divers",
+        question: "Quelle ville est surnommée la 'Ville Rose' ?",
+        options: ["Lille", "Toulouse", "Nice", "Bordeaux"],
+        correct: 1,
+        explanation: "Toulouse, à cause de la couleur de ses briques."
+    },
+    {
+        theme: "Histoire",
+        question: "Qui a ordonné la construction de l'Arc de Triomphe ?",
+        options: ["Louis XIV", "Napoléon Ier", "Charles de Gaulle", "François Mitterrand"],
+        correct: 1,
+        explanation: "Napoléon voulait honorer la Grande Armée après la bataille d'Austerlitz."
+    },
+    {
+        theme: "Géographie",
+        question: "La Guyane est située :",
+        options: ["En Afrique", "En Amérique du Sud", "Dans l'Océan Indien", "Dans les Caraïbes"],
+        correct: 1,
+        explanation: "C'est le plus grand département français, situé au nord du Brésil."
+    },
+    {
+        theme: "Institutions",
+        question: "Le Sénat siège dans quel bâtiment ?",
+        options: ["Palais Bourbon", "Palais du Luxembourg", "Palais de l'Élysée", "Hôtel de Ville"],
+        correct: 1,
+        explanation: "Les sénateurs siègent au Palais du Luxembourg à Paris."
+    },
+    {
+        theme: "Institutions",
+        question: "Combien y a-t-il de régions en France Métropolitaine ?",
+        options: ["10", "13", "22", "96"],
+        correct: 1,
+        explanation: "Depuis 2016, il y a 13 régions en métropole (et 5 outre-mer)."
+    },
+    {
+        theme: "Culture",
+        question: "Le Festival de Cannes récompense le cinéma avec :",
+        options: ["Un Oscar", "Un César", "Une Palme d'Or", "Un Lion d'Or"],
         correct: 2,
-        explanation: "C'est un des plus grands tournois de tennis au monde (sur terre battue)."
+        explanation: "La Palme d'Or est la récompense suprême du festival."
     },
     {
-        question: "Quel est le plat traditionnel alsacien ?",
-        options: ["Le Cassoulet", "La Choucroute", "La Crêpe", "La Bouillabaisse"],
+        theme: "Histoire",
+        question: "Le Débarquement du 6 juin 1944 a eu lieu en :",
+        options: ["Provence", "Normandie", "Bretagne", "Pas-de-Calais"],
         correct: 1,
-        explanation: "La choucroute est emblématique de l'Alsace (Marseille = Bouillabaisse, Bretagne = Crêpe)."
+        explanation: "Les Alliés ont débarqué sur les plages de Normandie (Utah, Omaha...)."
     },
     {
-        question: "Qu'est-ce que 'l'Académie française' ?",
-        options: ["Une école de tennis", "Une institution qui protège la langue française", "Un concours de cuisine", "Le bureau du Président"],
+        theme: "Symboles",
+        question: "Quel animal représente la France (sportive) ?",
+        options: ["L'Aigle", "Le Coq", "Le Lion", "Le Panda"],
         correct: 1,
-        explanation: "Fondée par Richelieu en 1635, elle est chargée de définir la langue française."
+        explanation: "Le Coq Gaulois est un symbole latin (Gallus = coq et gaulois)."
     },
     {
-        question: "Dans quelle ville se déroule le Festival de Cinéma le plus célèbre ?",
-        options: ["Paris", "Deauville", "Cannes", "Lyon"],
-        correct: 2,
-        explanation: "Le Festival de Cannes récompense les meilleurs films avec la Palme d'Or."
-    },
-    {
-        question: "Qu'est-ce qu'un 'Maire' ?",
-        options: ["Le représentant de l'État dans le département", "L'élu qui dirige une commune (ville/village)", "Le chef des pompiers", "Un juge"],
+        theme: "Société",
+        question: "Le Pacte Civil de Solidarité s'appelle :",
+        options: ["Le Mariage", "Le PACS", "Le Concubinage", "Le Bail"],
         correct: 1,
-        explanation: "Le Maire est élu par le conseil municipal pour diriger la commune."
+        explanation: "Le PACS (créé en 1999) est une union civile entre deux majeurs."
+    },
+    {
+        theme: "Histoire",
+        question: "Simone Veil est célèbre pour :",
+        options: ["La loi sur l'IVG", "La mode", "La cuisine", "Le cinéma"],
+        correct: 0,
+        explanation: "Elle a fait voter la loi légalisant l'Interruption Volontaire de Grossesse en 1975."
     }
 ];
