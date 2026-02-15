@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Naturalisation - Pour Suchithra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="start-screen" class="screen active">
+            <h1>🇫🇷 Quiz Naturalisation</h1>
+            <p>Entraînement à l'entretien réglementaire.</p>
+            <p>Objectif : 40 questions, maximum 8 erreurs.</p>
+            <button onclick="startQuiz()">Commencer l'examen</button>
+        </div>
+
+        <div id="quiz-screen" class="screen hidden">
+            <div class="progress-bar">
+                <div id="progress"></div>
+            </div>
+            <div class="question-header">
+                <span id="question-count">Question 1/40</span>
+            </div>
+            <h2 id="question-text">La question s'affichera ici...</h2>
+            <div id="options-container" class="options-grid">
+                </div>
+        </div>
+
+        <div id="result-screen" class="screen hidden">
+            <h2>Résultat de la session</h2>
+            <div id="score-display"></div>
+            <p id="pass-fail-message"></p>
+            
+            <button onclick="restartQuiz()">Recommencer</button>
+
+            <div class="corrections">
+                <h3>Corrections et Explications :</h3>
+                <div id="correction-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
