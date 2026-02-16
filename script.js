@@ -1,115 +1,164 @@
 let currentQuestionIndex = 0;
-let userAnswers = {}; // Objet pour stocker les réponses par index {0: 1, 1: 3, ...}
-let shuffledQuestions = [];
+let userAnswers = {}; 
+let currentQuestions = []; // Les questions de la session en cours
 let timerInterval;
-const TIME_LIMIT = 45 * 60; // 45 minutes en secondes
-let timeRemaining = TIME_LIMIT;
+const EXAM_TIME = 45 * 60; // 45 min
+let timeRemaining = EXAM_TIME;
+let isExamMode = true; // Pour savoir si on gère le timer et le score strict
 
-// --- GESTION DU THÈME (DARK/LIGHT) ---
-function toggleTheme() {
-    const body = document.body;
-    const isDark = body.getAttribute('data-theme') === 'dark';
-    body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+// --- GESTION DES ÉCRANS ---
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById(screenId).classList.remove('hidden');
+    document.getElementById(screenId).classList.add('active');
+}
+
+function goHome() {
+    clearInterval(timerInterval);
+    document.getElementById('timer').classList.add('hidden');
+    document.getElementById('mode-indicator').classList.add('hidden');
+    showScreen('home-screen');
+}
+
+// --- INITIALISATION THEMES ---
+// Récupère la liste unique des thèmes depuis questions.js
+function getUniqueThemes() {
+    const themes = new Set(questionsData.map(q => q.theme));
+    return Array.from(themes).sort();
+}
+
+function showThemes() {
+    const grid = document.getElementById('themes-grid');
+    grid.innerHTML = '';
+    const themes = getUniqueThemes();
+
+    themes.forEach(theme => {
+        const btn = document.createElement('button');
+        btn.innerText = theme;
+        btn.className = 'theme-btn';
+        // Compte le nombre de questions pour ce thème
+        const count = questionsData.filter(q => q.theme === theme).length;
+        btn.innerHTML = `${theme} <br><span style="font-size:0.8em; font-weight:normal">${count} questions</span>`;
+        
+        btn.onclick = () => startTraining(theme);
+        grid.appendChild(btn);
+    });
+    showScreen('theme-screen');
 }
 
 // --- MOTEUR DU QUIZ ---
-function startQuiz() {
-    // Mélange et sélectionne 40 questions (ou moins si pas assez)
-    shuffledQuestions = questionsData.sort(() => 0.5 - Math.random()).slice(0, 40);
+
+// Mode 1 : Examen (40 questions, timer, toutes catégories)
+function startExam() {
+    isExamMode = true;
+    // Mélange total
+    let allQuestions = [...questionsData].sort(() => 0.5 - Math.random());
+    currentQuestions = allQuestions.slice(0, 40);
     
+    setupQuizUI("Examen Blanc");
+    startTimer();
+}
+
+// Mode 2 : Entraînement (Questions filtrées, pas de timer)
+function startTraining(theme) {
+    isExamMode = false;
+    // Filtre par thème
+    let themeQuestions = questionsData.filter(q => q.theme === theme);
+    // Mélange
+    currentQuestions = themeQuestions.sort(() => 0.5 - Math.random());
+    
+    setupQuizUI(`Entraînement : ${theme}`);
+    document.getElementById('timer').classList.add('hidden'); // Pas de timer
+}
+
+function setupQuizUI(modeTitle) {
     currentQuestionIndex = 0;
     userAnswers = {};
-    timeRemaining = TIME_LIMIT;
+    timeRemaining = EXAM_TIME;
     
-    // Interface
-    document.getElementById('start-screen').classList.replace('active', 'hidden');
-    document.getElementById('result-screen').classList.replace('active', 'hidden');
-    document.getElementById('quiz-screen').classList.replace('hidden', 'active');
-    document.getElementById('timer').classList.remove('hidden');
+    document.getElementById('mode-indicator').innerText = modeTitle;
+    document.getElementById('mode-indicator').classList.remove('hidden');
     
-    startTimer();
+    if(isExamMode) document.getElementById('timer').classList.remove('hidden');
+
+    showScreen('quiz-screen');
     showQuestion();
 }
 
-function startTimer() {
-    clearInterval(timerInterval);
-    updateTimerDisplay();
-    timerInterval = setInterval(() => {
-        timeRemaining--;
-        updateTimerDisplay();
-        if (timeRemaining <= 0) {
-            finishQuiz(); // Temps écoulé
-        }
-    }, 1000);
-}
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-    document.getElementById('timer').innerText = 
-        `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    
-    // Alerte visuelle si moins de 2 minutes
-    if (timeRemaining < 120) document.getElementById('timer').style.color = "red";
-    else document.getElementById('timer').style.color = "inherit";
-}
+// --- LOGIQUE COMMUNE ---
 
 function showQuestion() {
-    const questionData = shuffledQuestions[currentQuestionIndex];
+    const q = currentQuestions[currentQuestionIndex];
     
-    // Affichage Textes
-    document.getElementById('theme-display').innerText = questionData.theme || "Culture Générale";
-    document.getElementById('question-text').innerText = questionData.question;
-    document.getElementById('question-count').innerText = `${currentQuestionIndex + 1} / ${shuffledQuestions.length}`;
+    document.getElementById('theme-display').innerText = q.theme;
+    document.getElementById('question-text').innerText = q.question;
+    document.getElementById('question-count').innerText = `${currentQuestionIndex + 1} / ${currentQuestions.length}`;
     
-    // Barre de progression
-    const progressPercent = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+    const progressPercent = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
     document.getElementById('progress').style.width = `${progressPercent}%`;
 
-    // Gestion du bouton "Précédent"
     const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    
     if (currentQuestionIndex === 0) btnPrev.classList.add('hidden');
     else btnPrev.classList.remove('hidden');
 
-    // Génération des options (Mélangées)
+    // Visibilité du bouton suivant
+    if (userAnswers[currentQuestionIndex] !== undefined) {
+        btnNext.classList.remove('hidden');
+    } else {
+        btnNext.classList.add('hidden');
+    }
+
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
 
-    // On prépare les options avec leur index d'origine pour savoir laquelle est la bonne
-    let optionsWithIndex = questionData.options.map((opt, originalIndex) => {
-        return { text: opt, originalIndex: originalIndex };
-    });
-    // On mélange l'affichage
-    optionsWithIndex.sort(() => Math.random() - 0.5);
+    // Mélange des options
+    let optionsMap = q.options.map((text, idx) => ({ text, originalIdx: idx }));
+    // On utilise une graine simple basée sur l'index de la question pour que le mélange reste le même si on revient en arrière
+    // (Astuce simple : on remélange aléatoirement ici, c'est acceptable)
+    optionsMap.sort(() => Math.random() - 0.5);
 
-    optionsWithIndex.forEach((optObj) => {
-        const button = document.createElement('button');
-        button.innerText = optObj.text;
-        button.classList.add('option-btn');
-        
-        // Si l'utilisateur a déjà répondu à cette question (en revenant en arrière), on met en surbrillance
-        if (userAnswers[currentQuestionIndex] === optObj.originalIndex) {
-            button.classList.add('selected');
+    optionsMap.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.innerText = opt.text;
+        btn.className = 'option-btn';
+        if (userAnswers[currentQuestionIndex] === opt.originalIdx) {
+            btn.classList.add('selected');
         }
-
-        button.onclick = () => selectOption(optObj.originalIndex);
-        optionsContainer.appendChild(button);
+        btn.onclick = () => selectOption(opt.originalIdx);
+        optionsContainer.appendChild(btn);
     });
 }
 
 function selectOption(originalIndex) {
-    // Sauvegarde la réponse
     userAnswers[currentQuestionIndex] = originalIndex;
+    
+    // Mise à jour UI
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.classList.remove('selected'));
+    event.target.classList.add('selected');
 
-    // Passe à la suivante après un court délai (pour voir le clic)
+    document.getElementById('btn-next').classList.remove('hidden');
+
+    // Auto-next fluide
     setTimeout(() => {
-        if (currentQuestionIndex < shuffledQuestions.length - 1) {
-            currentQuestionIndex++;
-            showQuestion();
+        if(currentQuestionIndex < currentQuestions.length - 1) {
+            nextQuestion();
         } else {
             finishQuiz();
         }
-    }, 200); // 200ms de délai pour fluidité
+    }, 300);
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < currentQuestions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+    } else {
+        finishQuiz();
+    }
 }
 
 function prevQuestion() {
@@ -119,69 +168,80 @@ function prevQuestion() {
     }
 }
 
-function quitQuiz() {
-    if(confirm("Voulez-vous vraiment quitter l'examen en cours ?")) {
-        clearInterval(timerInterval);
-        location.reload(); // Recharge la page pour revenir au début
-    }
-}
-
-function finishQuiz() {
+// --- TIMER & FIN ---
+function startTimer() {
     clearInterval(timerInterval);
-    
-    // Calcul du score final
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) finishQuiz(true);
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    const el = document.getElementById('timer');
+    el.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    el.style.color = timeRemaining < 120 ? "#EF4135" : "inherit";
+}
+
+function finishQuiz(timeOut = false) {
+    clearInterval(timerInterval);
+    document.getElementById('timer').classList.add('hidden');
+    document.getElementById('mode-indicator').classList.add('hidden');
+
     let score = 0;
-    shuffledQuestions.forEach((q, index) => {
-        if (userAnswers[index] === q.correct) {
-            score++;
-        }
+    currentQuestions.forEach((q, idx) => {
+        if (userAnswers[idx] === q.correct) score++;
     });
 
-    document.getElementById('quiz-screen').classList.replace('active', 'hidden');
-    document.getElementById('result-screen').classList.replace('hidden', 'active');
-    document.getElementById('timer').classList.add('hidden');
-
-    const scoreDisplay = document.getElementById('score-display');
-    const msgDisplay = document.getElementById('pass-fail-message');
-    const correctionList = document.getElementById('correction-list');
-
-    // 40 questions, max 8 erreurs => réussite à 32/40 (80%)
-    // Adaptation dynamique si moins de questions
-    const threshold = Math.ceil(shuffledQuestions.length * 0.8);
+    // Seuil de réussite (80%)
+    const threshold = Math.ceil(currentQuestions.length * 0.8);
     const passed = score >= threshold;
-    
-    scoreDisplay.innerHTML = `<span class="score-badge ${passed ? 'pass' : 'fail'}">${score} / ${shuffledQuestions.length}</span>`;
-    
-    if (passed) {
-        msgDisplay.innerHTML = "<strong>Félicitations !</strong> Vous avez réussi le test.";
-        msgDisplay.className = "pass";
+
+    showScreen('result-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const msg = document.getElementById('pass-fail-message');
+
+    document.getElementById('score-number').innerText = score;
+    document.getElementById('score-total-display').innerText = `/ ${currentQuestions.length}`;
+
+    if (isExamMode) {
+        if (passed) {
+            resultScreen.className = "screen active pass";
+            msg.innerHTML = "<strong>Félicitations !</strong> Examen réussi 🎉";
+        } else {
+            resultScreen.className = "screen active fail";
+            msg.innerHTML = timeOut ? "<strong>Temps écoulé !</strong>" : "<strong>Échec.</strong> Encore un effort !";
+        }
     } else {
-        msgDisplay.innerHTML = "<strong>Échec.</strong> Trop d'erreurs (Max autorisé : " + (shuffledQuestions.length - threshold) + ").";
-        msgDisplay.className = "fail";
+        // Mode entraînement : on est plus bienveillant
+        resultScreen.className = "screen active " + (passed ? "pass" : "fail");
+        msg.innerHTML = passed ? "Super session !" : "Continuez à vous entraîner.";
     }
 
-    // Affichage des corrections
-    correctionList.innerHTML = '';
-    shuffledQuestions.forEach((q, index) => {
-        const userAnswerIndex = userAnswers[index];
-        const isCorrect = userAnswerIndex === q.correct;
-        const userText = (userAnswerIndex !== undefined) ? q.options[userAnswerIndex] : "Aucune réponse";
-        const correctText = q.options[q.correct];
-
+    // Génération correction
+    const list = document.getElementById('correction-list');
+    list.innerHTML = '';
+    currentQuestions.forEach((q, idx) => {
+        const userRepIdx = userAnswers[idx];
+        const isCorrect = userRepIdx === q.correct;
+        const userText = userRepIdx !== undefined ? q.options[userRepIdx] : "Pas de réponse";
         const item = document.createElement('div');
-        item.classList.add('correction-item');
-        if (isCorrect) item.classList.add('correct-answer');
-
+        item.className = `correction-item ${isCorrect ? 'correct' : 'wrong'}`;
         item.innerHTML = `
-            <div><strong>${index + 1}. ${q.question}</strong> <span style="font-size:0.8em; color:grey">(${q.theme || 'Divers'})</span></div>
-            <div style="color: ${isCorrect ? 'green' : 'red'}">Votre réponse : ${userText} ${isCorrect ? '✅' : '❌'}</div>
-            ${!isCorrect ? `<div style="color: green; font-weight:bold;">Bonne réponse : ${correctText}</div>` : ''}
-            <div style="font-style: italic; margin-top:5px; font-size:0.9em">${q.explanation}</div>
+            <div style="font-weight:bold; margin-bottom:5px;">${idx+1}. ${q.question}</div>
+            <div style="font-size:0.9rem; color:${isCorrect ? '#27ae60' : '#c0392b'}">Votre réponse : ${userText} ${isCorrect?'✅':'❌'}</div>
+            ${!isCorrect ? `<div style="font-size:0.9rem; color:#27ae60">Bonne réponse : ${q.options[q.correct]}</div>` : ''}
+            <div style="margin-top:5px; font-style:italic; font-size:0.85rem; color:#7f8c8d">💡 ${q.explanation}</div>
         `;
-        correctionList.appendChild(item);
+        list.appendChild(item);
     });
 }
 
-function restartQuiz() {
-    location.reload();
+function toggleTheme() {
+    const body = document.body;
+    body.setAttribute('data-theme', body.getAttribute('data-theme')==='dark'?'light':'dark');
 }

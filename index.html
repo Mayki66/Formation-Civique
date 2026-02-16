@@ -3,54 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Quiz Naturalisation</title>
+    <title>Naturalisation V3</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-theme="light">
 
     <nav class="navbar">
-        <button class="nav-btn" onclick="quitQuiz()">❌ Quitter</button>
-        <div id="timer" class="hidden">45:00</div>
-        <button class="nav-btn" onclick="toggleTheme()">🌗</button>
+        <div class="nav-left">
+            <button class="nav-btn-icon" onclick="goHome()" title="Accueil">🏠</button>
+        </div>
+        <div class="nav-center">
+            <div id="timer" class="hidden">45:00</div>
+            <div id="mode-indicator" class="hidden">Entraînement</div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn-icon" onclick="toggleTheme()" title="Thème">🌗</button>
+        </div>
     </nav>
 
     <div class="container">
-        <div id="start-screen" class="screen active">
-            <h1>🇫🇷 Prêt pour l'examen ?</h1>
-            <p>40 questions • 45 minutes • Max 8 fautes</p>
-            <div class="info-box">
-                <p>Thèmes : Histoire, Géographie, Institutions, Valeurs.</p>
+        
+        <div id="home-screen" class="screen active">
+            <div class="hero-icon">🇫🇷</div>
+            <h1>Préparation Naturalisation</h1>
+            <p class="subtitle">Choisissez votre mode de révision</p>
+
+            <div class="mode-cards">
+                <div class="card mode-card" onclick="startExam()">
+                    <div class="icon">🎓</div>
+                    <h3>Examen Blanc</h3>
+                    <p>40 questions • 45 min</p>
+                    <p class="detail">Conditions réelles (Mélange de tous les thèmes)</p>
+                </div>
+
+                <div class="card mode-card" onclick="showThemes()">
+                    <div class="icon">📚</div>
+                    <h3>Entraînement</h3>
+                    <p>Par Thème • Pas de temps</p>
+                    <p class="detail">Révisez un sujet spécifique à votre rythme</p>
+                </div>
             </div>
-            <button class="main-btn" onclick="startQuiz()">Commencer l'épreuve</button>
+        </div>
+
+        <div id="theme-screen" class="screen hidden">
+            <h2>Choisir un thème</h2>
+            <p class="subtitle">Sur quoi voulez-vous progresser ?</p>
+            <div id="themes-grid" class="themes-grid">
+                </div>
+            <button class="secondary-btn" onclick="goHome()">⬅ Retour</button>
         </div>
 
         <div id="quiz-screen" class="screen hidden">
             <div class="quiz-header">
-                <span id="theme-display" class="theme-tag">Culture Générale</span>
-                <span id="question-count">1/40</span>
+                <span id="theme-display" class="theme-tag">Culture</span>
+                <span id="question-count" class="count-tag">1/40</span>
             </div>
             
-            <div class="progress-bar">
+            <div class="progress-container">
                 <div id="progress"></div>
             </div>
 
-            <h2 id="question-text">Question...</h2>
+            <div class="question-box">
+                <h2 id="question-text">Question...</h2>
+            </div>
             
             <div id="options-container" class="options-grid"></div>
 
             <div class="navigation-area">
-                <button id="btn-prev" class="secondary-btn hidden" onclick="prevQuestion()">⬅ Précédent</button>
-                </div>
+                <button id="btn-prev" class="nav-btn text-btn hidden" onclick="prevQuestion()">⬅ Précédent</button>
+                <button id="btn-next" class="nav-btn text-btn hidden" onclick="nextQuestion()">Suivant ➡</button>
+            </div>
         </div>
 
         <div id="result-screen" class="screen hidden">
-            <h2>Résultat de la session</h2>
-            <div id="score-display"></div>
-            <p id="pass-fail-message"></p>
-            <button class="main-btn" onclick="restartQuiz()">Nouvelle Série</button>
+            <h2 id="result-title">Résultat</h2>
             
-            <div class="corrections">
-                <h3>Détail des réponses :</h3>
+            <div class="result-circle">
+                <span id="score-number">0</span>
+                <span class="score-total" id="score-total-display">/ 40</span>
+            </div>
+
+            <p id="pass-fail-message" class="result-message"></p>
+            
+            <button class="main-btn" onclick="goHome()">Retour à l'accueil</button>
+            
+            <div class="corrections-container">
+                <h3>Corrigé de la séance :</h3>
                 <div id="correction-list"></div>
             </div>
         </div>
